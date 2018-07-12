@@ -10,17 +10,16 @@
 <body>
 	<main role="main">
 		<h1 role="header">Search YouTube videos by name</h1>
-		<form action"#">
-			<label for="search">Search</label>
-			<input placeholder="funny cat fails" type="text" name="search" id="search" />
+		<form action"#" class="js-search-form">
+			<label for="query"></label>
+			<input placeholder="funny cat fails" type="text" class="js-query">
 			<button type="submit">Submit</button>
 		</form>
 
 		<h2>Results</h2>
-		<div></div>
+		<div class="js-search-results"></div>
 
 	</main>
-
-	<link rel="stylesheet" type="text/css" href="index.js">
+	<script src="index.js"></script>
 </body>
 </html>
