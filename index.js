@@ -24,18 +24,33 @@ function getDataFromApi(searchTerm, callback) {
   $.ajax(settings);
 };
 
+
+// function renderTextResultAmount(resultText) {
+// return
+//   `<div>
+//       <p>There are about ${resultText} results.</p>
+//     </div>`;
+// }
+
+
+// function displayResultText(data) {
+
+// const textAmount = data.pageInfo.totalResults
+
+
+//   $('.js-text-results').html(renderTextResultAmount(textAmount));
+// }
+
+
+
 function renderResult(result) {
 	return `
-		<div>
-      <video controls
-       muted
-       src="https://www.youtube.com/watch?v=&html5=True${result.id.videoId}"
-       poster="${result.snippet.thumbnails.medium.url}">
-     Sorry, your browser doesn't support embedded videos.
-     </video>
- 
-
-		
+    <div>
+      <h3>${result.snippet.title}</h3>
+      <a target="_blank" href="https://www.youtube.com/channel/${result.snippet.channelId}"><p>${result.snippet.channelTitle}</p></a>
+      <a target="_blank" href="https://www.youtube.com/watch?v=${result.id.videoId}">
+      <img src="${result.snippet.thumbnails.medium.url}" alt="${result.snippet.description}">
+      </a>
 		</div>
 	`;
 }
@@ -64,6 +79,7 @@ function displayYoutubeSearchThumbnails(data) {
 
 
 	$('.js-search-results').html(results);
+  
 }
 
 function watchSubmit() {
