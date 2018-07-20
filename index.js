@@ -27,15 +27,41 @@ function getDataFromApi(searchTerm, callback) {
 function renderResult(result) {
 	return `
 		<div>
-			<img src="${result.snippet.thumbnails.high.url}">
+      <video controls
+       muted
+       src="https://www.youtube.com/watch?v=&html5=True${result.id.videoId}"
+       poster="${result.snippet.thumbnails.medium.url}">
+     Sorry, your browser doesn't support embedded videos.
+     </video>
+ 
+
+		
 		</div>
 	`;
 }
 
+// <video controls
+//        muted
+//        src="https://www.youtube.com/watch?v=${result.id.videoId}"
+//        poster="${result.snippet.thumbnails.medium.url}">
+//     Sorry, your browser doesn't support embedded videos.
+//     </video>
+
+// //<a target="_blank" href="https://www.youtube.com/watch?v=${result.id.videoId}">
+      // <img src="${result.snippet.thumbnails.medium.url}">
+      // </a>
+
+
 function displayYoutubeSearchThumbnails(data) {
 	console.log(data);
 
-	const results = data.items.map((item, index) => renderResult(item));
+	const results = data.items.map((item) => renderResult(item));
+
+  // const results = []
+  // for (let i = 0; i < data.items.length; i++) {
+  //   results.push(renderResult(data.items[i]));
+  // }
+
 
 	$('.js-search-results').html(results);
 }
