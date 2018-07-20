@@ -25,28 +25,12 @@ function getDataFromApi(searchTerm, callback) {
 };
 
 
-// function renderTextResultAmount(resultText) {
-// return
-//   `<div>
-//       <p>There are about ${resultText} results.</p>
-//     </div>`;
-// }
-
-
-// function displayResultText(data) {
-
-// const textAmount = data.pageInfo.totalResults
-
-
-//   $('.js-text-results').html(renderTextResultAmount(textAmount));
-// }
-
 
 
 function renderResult(result) {
 	return `
     <div>
-      <h3>${result.snippet.title}</h3>
+      <h3><a target="_blank" href="https://www.youtube.com/watch?v=${result.id.videoId}">${result.snippet.title}</a></h3>
       <a target="_blank" href="https://www.youtube.com/channel/${result.snippet.channelId}"><p>${result.snippet.channelTitle}</p></a>
       <a target="_blank" href="https://www.youtube.com/watch?v=${result.id.videoId}">
       <img src="${result.snippet.thumbnails.medium.url}" alt="${result.snippet.description}">
@@ -55,16 +39,6 @@ function renderResult(result) {
 	`;
 }
 
-// <video controls
-//        muted
-//        src="https://www.youtube.com/watch?v=${result.id.videoId}"
-//        poster="${result.snippet.thumbnails.medium.url}">
-//     Sorry, your browser doesn't support embedded videos.
-//     </video>
-
-// //<a target="_blank" href="https://www.youtube.com/watch?v=${result.id.videoId}">
-      // <img src="${result.snippet.thumbnails.medium.url}">
-      // </a>
 
 
 function displayYoutubeSearchThumbnails(data) {
@@ -72,30 +46,42 @@ function displayYoutubeSearchThumbnails(data) {
 
 	const results = data.items.map((item) => renderResult(item));
 
-  // const results = []
-  // for (let i = 0; i < data.items.length; i++) {
-  //   results.push(renderResult(data.items[i]));
-  // }
-
-
 	$('.js-search-results').html(results);
   
 }
 
-function watchSubmit() {
 
+
+//Render the total amout of search results to the page
+//how to call it correctly
+
+function renderTextResultAmount(data) {
+
+  console.log(data.pageInfo.totalResults)
+
+  $('.js-text-results').html(
+    `<div>
+      <p>There are about ${data.pageInfo.totalResults} results.</p>
+    </div>`);
+
+}
+
+
+
+function watchSubmit() {
 	$('.js-search-form').submit(event => {
+
 		event.preventDefault();
 		const queryTarget = $(event.currentTarget).find('.js-query');
-    	const query = queryTarget.val();
+    const query = queryTarget.val();
 		
-    	getDataFromApi(query, displayYoutubeSearchThumbnails);
+    getDataFromApi(query, displayYoutubeSearchThumbnails);
+
 
 	});
 }
 
 
 $(watchSubmit);
-
 
 
