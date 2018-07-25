@@ -14,7 +14,9 @@ function getDataFromApi(searchTerm, callback) {
     data: {
     	part: 'snippet',
     	key: 'AIzaSyCtpVsrKn4sQ00ieSwBXEnt0iAa7HEv3-E',
-    	q: searchTerm
+    	q: searchTerm,
+      maxResults: 10,
+
     },
     dataType: 'json',
     type: 'GET',
@@ -42,29 +44,67 @@ function renderResult(result) {
 
 
 function displayYoutubeSearchThumbnails(data) {
-	console.log(data);
 
 	const results = data.items.map((item) => renderResult(item));
+  const pageToken = data.nextPageToken
+
 
 	$('.js-search-results').html(results);
+
+  renderTextResultAmount(data);
+  renderPageNext();
   
+}
+
+function getNextPageToken(data) {
+  return data.nextPageToken
 }
 
 
 
 //Render the total amout of search results to the page
-//how to call it correctly
 
 function renderTextResultAmount(data) {
-
-  console.log(data.pageInfo.totalResults)
 
   $('.js-text-results').html(
     `<div>
       <p>There are about ${data.pageInfo.totalResults} results.</p>
     </div>`);
 
+
+
 }
+
+
+function renderPageNext() {
+  $('.js-next-button').html(
+    `<a href="#" id='nextPage'>Next</a>
+    `);
+
+}
+
+
+ 
+function loadNextPage(data) {
+  console.log('load next page', data);
+  $('#nextPage').on('click', function() {
+    const settings = {
+    url: YOUTUBE_SEARCH_URL,
+    data: {
+      part: 'snippet',
+      key: 'AIzaSyCtpVsrKn4sQ00ieSwBXEnt0iAa7HEv3-E',
+      maxResults: 10,
+      pageToken: data.nextPageToken
+
+    },
+    dataType: 'json',
+    type: 'GET'
+  };
+
+  $.ajax(settings);
+  });
+}
+
 
 
 
@@ -77,11 +117,16 @@ function watchSubmit() {
 		
     getDataFromApi(query, displayYoutubeSearchThumbnails);
 
-
 	});
 }
 
 
-$(watchSubmit);
+function loadVideos() {
+  watchSubmit();
+  loadNextPage();
+}
+
+
+$(loadVideos);
 
 
