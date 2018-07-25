@@ -48,17 +48,18 @@ function displayYoutubeSearchThumbnails(data) {
 	const results = data.items.map((item) => renderResult(item));
   const pageToken = data.nextPageToken
 
+  $('.js-search-results').prop('hidden', false)
 
 	$('.js-search-results').html(results);
 
   renderTextResultAmount(data);
-  renderPageNext();
+  // renderPageNext();
   
 }
 
-function getNextPageToken(data) {
-  return data.nextPageToken
-}
+// function getNextPageToken(data) {
+//   return data.nextPageToken
+// }
 
 
 
@@ -76,34 +77,34 @@ function renderTextResultAmount(data) {
 }
 
 
-function renderPageNext() {
-  $('.js-next-button').html(
-    `<a href="#" id='nextPage'>Next</a>
-    `);
+// function renderPageNext() {
+//   $('.js-next-button').html(
+//     `<a href="#" id='nextPage'>Next</a>
+//     `);
 
-}
+// }
 
 
  
-function loadNextPage(data) {
-  console.log('load next page', data);
-  $('#nextPage').on('click', function() {
-    const settings = {
-    url: YOUTUBE_SEARCH_URL,
-    data: {
-      part: 'snippet',
-      key: 'AIzaSyCtpVsrKn4sQ00ieSwBXEnt0iAa7HEv3-E',
-      maxResults: 10,
-      pageToken: data.nextPageToken
+// function loadNextPage(data) {
+//   console.log('load next page', data);
+//   $('#nextPage').on('click', function() {
+//     const settings = {
+//     url: YOUTUBE_SEARCH_URL,
+//     data: {
+//       part: 'snippet',
+//       key: 'AIzaSyCtpVsrKn4sQ00ieSwBXEnt0iAa7HEv3-E',
+//       maxResults: 10,
+//       pageToken: data.nextPageToken
 
-    },
-    dataType: 'json',
-    type: 'GET'
-  };
+//     },
+//     dataType: 'json',
+//     type: 'GET'
+//   };
 
-  $.ajax(settings);
-  });
-}
+//   $.ajax(settings);
+//   });
+// }
 
 
 
@@ -121,12 +122,15 @@ function watchSubmit() {
 }
 
 
-function loadVideos() {
-  watchSubmit();
-  loadNextPage();
-}
+// function loadVideos() {
+//   watchSubmit();
+//   loadNextPage();
+// }
 
 
-$(loadVideos);
+// $(loadVideos);
+
+
+$(watchSubmit);
 
 
